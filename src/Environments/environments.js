@@ -12,6 +12,16 @@ const Environments = () => {
   const {data} = useSWR(keycloak.authenticated ? '/account/instances' : null, {
     refreshInterval: 3000,
   })
+  const showcase = {
+    id: 'jklfda',
+    name: 'Original Analysis',
+    state: {status: 'ACTIVE'},
+    hostname: process.env.REACT_APP_ORIG_HOST,
+    protocols: [{port: process.env.REACT_APP_ORIG_PORT}],
+    description: 'Dummy Showcase Env',
+    plan: {name: 'Jupyter Local'},
+    image: {name: 'jupyter'},
+  }
   return (
     <Box>
       <Heading>Environments</Heading>
@@ -21,6 +31,7 @@ const Environments = () => {
         </Card>
       ) : data.length ? (
         <Suspense fallback={<Spinner />}>
+          <Environment key={showcase.id} environment={showcase} />
           {data.map(environment => (
             <Environment key={environment.id} environment={environment} />
           ))}

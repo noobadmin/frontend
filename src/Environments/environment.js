@@ -87,19 +87,37 @@ const Environment = ({environment}) => {
         <b>Plan </b>
         {environment.plan.name}
       </Box>
-      <S.Flex>
-        {environment.state.status === 'STOPPED' ? (
-          <Icon icon={Play} title="Start" action={() => action('START')} />
-        ) : (
+      {environment.plan.name !== 'Jupyter Local' ? (
+        <S.Flex>
+          {environment.state.status === 'STOPPED' ? (
+            <Icon icon={Play} title="Start" action={() => action('START')} />
+          ) : (
+            <Icon
+              icon={ShutDown}
+              title="Shutdown"
+              action={() => action('SHUTDOWN')}
+            />
+          )}
           <Icon
-            icon={ShutDown}
-            title="Shutdown"
-            action={() => action('SHUTDOWN')}
+            icon={Restart}
+            title="Restart"
+            action={() => action('REBOOT')}
           />
-        )}
-        <Icon icon={Restart} title="Restart" action={() => action('REBOOT')} />
-        <Icon icon={DeleteBin2} title="Remove" action={() => remove()} />
-      </S.Flex>
+          <Icon icon={DeleteBin2} title="Remove" action={() => remove()} />
+        </S.Flex>
+      ) : (
+        <S.Flex>
+          <Box mx={2} bg="foreground" flex={1} size={28} p={2}>
+            n/A
+          </Box>
+          <Box mx={2} bg="foreground" flex={1} size={28} p={2}>
+            n/A
+          </Box>
+          <Box mx={2} bg="foreground" flex={1} size={28} p={2}>
+            n/A
+          </Box>
+        </S.Flex>
+      )}
     </S.Card>
   )
 }
